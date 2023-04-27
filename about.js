@@ -8,6 +8,8 @@ const todoInput = document.getElementById("todo-input");
 const todoButton = document.getElementById("todo-button");
 const todoItemsContainer = document.getElementById("todo-items");
 
+updateUIWithTodoList();
+
 // Adding necessary event listener
 // todoInput.addEventListener("keyup", function (event) {})
 
@@ -28,15 +30,15 @@ todoButton.addEventListener("click", function (event) {
     todoInput.value = "";
 
     // loop over it and display it to the UI
-    buildTodoItem(inputValue);
+    updateUIWithTodoList();
 })
 
 // // Todo Item Builder
 function buildTodoItem(todoItem) {
     {/* <div id="todo-item" class="flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4">
-            <input type="checkbox" class="" />
+            <input data-id="2" type="checkbox" class="" />
             <p>The item on my todo list</p>
-          </div> */}
+        </div> */}
     const parentDiv = document.createElement("div");
     parentDiv.setAttribute("id", "todo-item");
     const classList = "flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4".split(" ");
@@ -44,10 +46,11 @@ function buildTodoItem(todoItem) {
     
 
     const checkBox = document.createElement("input");
-    checkBox.setAttribute("type", "checkbox")
+    checkBox.setAttribute("type", "checkbox");
+    checkBox.dataset.id = todoItem.id;
 
     const todoPara = document.createElement("p");
-    const textNode = document.createTextNode(todoItem);
+    const textNode = document.createTextNode(todoItem.title);
     todoPara.appendChild(textNode)
     // todoPara.innerText = todoItem
 
@@ -57,32 +60,14 @@ function buildTodoItem(todoItem) {
     todoItemsContainer.append(parentDiv);
 }
 
-// function  updateUIWithTodoList() {
-//     const updatedTodoList = getTodoListItems();
-//     // clear the view
-//     todoItemsContainer.innerHTML = "";
-//     // loop over it and display it to the UI
-//     updatedTodoList.forEach((todoListItem) => {
-//         buildTodoItem(todoListItem);
-//     })
-// }
+function updateUIWithTodoList() {
+    const updatedTodoList = getTodoList();
 
+    // clear the view
+    todoItemsContainer.innerHTML = "";
 
-/**
- * TODO functionalities
- */
-
-// let MY_TODO_LIST = ["This item is a default added by package owner", "Delete the default Items"];
-
-// function addTodoItem(todoItem) {
-//     MY_TODO_LIST.push(todoItem);
-// }
-
-// // return the todolist array
-// function getTodoListItems() {
-//     return [...MY_TODO_LIST];
-// }
-
-
-// // After everything
-// updateUIWithTodoList();
+    // loop over it and display it to the UI
+    updatedTodoList.forEach((todoListItem) => {
+        buildTodoItem(todoListItem);
+    })
+}

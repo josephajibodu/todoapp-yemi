@@ -10,6 +10,8 @@
 let MY_TODO_LIST = []; // array of objects
 let currentId = 1;
 
+fetchTodoFromDB();
+
 /**
  * This function is used to add item to the list 
  * 
@@ -72,4 +74,9 @@ function findTodoItemById(id) {
   }
 
   return MY_TODO_LIST[searchedIndex];
+}
+
+function fetchTodoFromDB() {
+  addItemToList("My first todo list item")
+  addItemToList("My second todo list item")
 }
