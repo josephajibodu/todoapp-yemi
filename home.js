@@ -6,9 +6,7 @@ const todoButton = document.getElementById("todo-button");
 const todoItemsContainer = document.getElementById("todo-items");
 
 // Adding necessary event listener
-todoInput.addEventListener("keyup", function (event) {
-   
-})
+todoInput.addEventListener("keyup", function (event) {})
 
 todoButton.addEventListener("click", function (event) {
     // get the input value
