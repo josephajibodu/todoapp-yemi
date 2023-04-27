@@ -2,7 +2,8 @@
  * UI Functionalities
  */
 
-import { addItemToList, getTodoList, updateTodoItem } from "./todo.js"
+import { Alert } from "bootstrap";
+import { addItemToList, getTodoList, toggleTodoStatus, updateTodoItem } from "./todo.js"
 
 const todoInput = document.getElementById("todo-input");
 const todoButton = document.getElementById("todo-button");
@@ -13,6 +14,7 @@ updateUIWithTodoList();
 // Adding necessary event listener
 // todoInput.addEventListener("keyup", function (event) {})
 
+// Submit button
 todoButton.addEventListener("click", function (event) {
     // get the input value
     const inputValue = todoInput.value;
@@ -33,6 +35,20 @@ todoButton.addEventListener("click", function (event) {
     updateUIWithTodoList();
 })
 
+// Event that happens when a checkbox is checked
+function handleCheckbox(event) {
+    const checkbox = event.target;
+    const todoId = parseInt(checkbox.dataset.id); // convert string to int
+    const todoStatus = checkbox.checked
+    
+    try {
+        toggleTodoStatus(todoId)
+        updateUIWithTodoList();
+    } catch (error) {
+        alert(error.message)
+    }
+}
+
 // // Todo Item Builder
 function buildTodoItem(todoItem) {
     {/* <div id="todo-item" class="flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4">
@@ -48,11 +64,18 @@ function buildTodoItem(todoItem) {
     const checkBox = document.createElement("input");
     checkBox.setAttribute("type", "checkbox");
     checkBox.dataset.id = todoItem.id;
+    checkBox.addEventListener("change", handleCheckbox);
+    if (todoItem.isCompleted) {
+        checkBox.checked = true;
+    }
 
     const todoPara = document.createElement("p");
     const textNode = document.createTextNode(todoItem.title);
     todoPara.appendChild(textNode)
     // todoPara.innerText = todoItem
+    if (todoItem.isCompleted) {
+        todoPara.style.textDecoration = "line-through"
+    }
 
     parentDiv.append(checkBox)
     parentDiv.append(todoPara)
@@ -62,6 +85,7 @@ function buildTodoItem(todoItem) {
 
 function updateUIWithTodoList() {
     const updatedTodoList = getTodoList();
+    console.log(updatedTodoList);
 
     // clear the view
     todoItemsContainer.innerHTML = "";

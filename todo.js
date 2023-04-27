@@ -39,14 +39,16 @@ export function getTodoList() {
 }
 
 export function getSingleTodoItem(id) {
-  const todoItem = findTodoItemById(id);
-
+  const searchedIndex = findTodoItemById(id);
+  const todoItem = MY_TODO_LIST[searchedIndex];
+  
   return todoItem;
 }
 
 export function updateTodoItem(id, theUpdatedValue) {
-  const todoItem = findTodoItemById(id);
-
+  const searchedIndex = findTodoItemById(id);
+  const todoItem = MY_TODO_LIST[searchedIndex];
+  
   // This line copies the properties in todoObj and overrides the title property
   // It will safe you time when the object is much larger
   MY_TODO_LIST[searchedIndex] = {...todoItem, title: theUpdatedValue };
@@ -56,8 +58,9 @@ export function updateTodoItem(id, theUpdatedValue) {
 }
 
 export function toggleTodoStatus(id) {
-  const todoItem = findTodoItemById(id);
-
+  const searchedIndex = findTodoItemById(id);
+  const todoItem = MY_TODO_LIST[searchedIndex];
+  
   MY_TODO_LIST[searchedIndex] = {
     ...todoItem, 
     isCompleted: !todoItem.isCompleted // updates status to opposite of current status 
@@ -73,7 +76,7 @@ function findTodoItemById(id) {
     throw new Error("Todo not found");
   }
 
-  return MY_TODO_LIST[searchedIndex];
+  return searchedIndex;
 }
 
 function fetchTodoFromDB() {
