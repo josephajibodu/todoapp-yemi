@@ -164,7 +164,9 @@ function buildTodoItemWithHTMLString(todoItem) {
 
 function updateUIWithTodoList() {
     const updatedTodoList = getTodoList();
-    console.log(updatedTodoList);
+    
+    
+    document.getElementById("todo-list-count").innerText = updatedTodoList.length;
 
     // clear the view
     todoItemsContainer.innerHTML = "";
