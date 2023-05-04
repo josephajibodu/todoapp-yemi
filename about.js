@@ -2,7 +2,7 @@
  * UI Functionalities
  */
 
-import { addItemToList, getTodoList, toggleTodoStatus, updateTodoItem } from "./todo.js"
+import { addItemToList, deleteTodoItem, getTodoList, toggleTodoStatus, updateTodoItem } from "./todo.js"
 
 const todoInput = document.getElementById("todo-input");
 const todoButton = document.getElementById("todo-button");
@@ -52,10 +52,19 @@ function handleCheckbox(event) {
 function handleDelete(event) {
     const canDelete = confirm("Are you sure you want to delete this task?");
 
-    console.log("User said ", canDelete)
+    const todoId = parseInt(event.target.dataset.id);
+    
+    if (canDelete) {
+        deleteTodoItem(todoId)
+        updateUIWithTodoList();
+    }
 }
 
 // Event that triggers when Edit button is clicked
+function handleEdit(event) {
+    // const canDelete = confirm("Are you sure you want to delete this task?");
+
+}
 
 // // Todo Item Builder
 function buildTodoItem(todoItem) {
@@ -126,6 +135,9 @@ function buildTodoItemWithHTMLString(todoItem) {
 
     const deleteBtn = document.getElementById(`delete-todo-${todoItem.id}`);
     deleteBtn.addEventListener('click', handleDelete)
+
+    const editBtn = document.getElementById(`edit-todo-${todoItem.id}`);
+    deleteBtn.addEventListener('click', handleEdit)
 
 }
 

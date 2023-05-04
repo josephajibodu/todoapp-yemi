@@ -67,10 +67,17 @@ export function toggleTodoStatus(id) {
   };
 }
 
+export function deleteTodoItem(id) {
+  const searchedIndex = findTodoItemById(id);
+  
+  MY_TODO_LIST.splice(searchedIndex, 1);
+}
+
 function findTodoItemById(id) {
   const searchedIndex = MY_TODO_LIST.findIndex((todoItem) => {
     return todoItem.id === id
   });
+  
 
   if (searchedIndex === -1) {
     throw new Error("Todo not found");
