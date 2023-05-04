@@ -63,7 +63,26 @@ function handleDelete(event) {
 // Event that triggers when Edit button is clicked
 function handleEdit(event) {
     // const canDelete = confirm("Are you sure you want to delete this task?");
+    const todoId = parseInt(event.target.dataset.id);
+    const editForm = document.getElementById(`edit-form-${todoId}`)
+    
+    if (editForm.classList.contains('hidden')) {
+        editForm.classList.remove('hidden')
+        editForm.classList.add('flex')
 
+        editForm.querySelector('input').focus();
+    } else {
+        editForm.classList.remove('flex')
+        editForm.classList.add('hidden')
+    }
+}
+
+function handleUpdate(event) {
+    const todoId = parseInt(event.target.dataset.id);
+    const updateInput = document.getElementById(`update-input-${todoId}`).value
+
+    updateTodoItem(todoId, updateInput);
+    updateUIWithTodoList()
 }
 
 // // Todo Item Builder
@@ -116,15 +135,14 @@ function buildTodoItemWithHTMLString(todoItem) {
             <input id="checkbox-${todoItem.id}" data-id="${todoItem.id}" type="checkbox" ${todoItem.isCompleted ? 'checked' : ''} />
             <p class="flex-grow ${todoItem.isCompleted ? 'line-through' : ''}">${todoItem.title}</p>
             
-            <div class="hidden flex gap-2 absolute">
-              <input type="text" class="h-6" />
-              <button class="px-2 h-6 bg-white rounded text-green-500">✓</button>
-              <button class="px-2 h-6 bg-white rounded text-red-500">x</button>
+            <div id="edit-form-${todoItem.id}" class="hidden gap-2 absolute">
+              <input id="update-input-${todoItem.id}" type="text" class="h-6" value="${todoItem.title}" />
+              <button data-id="${todoItem.id}" id="update-form-${todoItem.id}" class="px-2 h-6 bg-white rounded text-green-500">✓</button>
             </div>
 
             <div class="flex gap-1">
               <button id="delete-todo-${todoItem.id}" data-id="${todoItem.id}" class="px-2 h-6 bg-white rounded text-red-500">x</button>
-              <button id="edit-todo-${todoItem.id}" data-id="${todoItem.id}" class="px-2 h-6 bg-blue-500 rounded text-white text-sm">Edit</button>
+              <button id="edit-todo-${todoItem.id}" data-id="${todoItem.id}" class="px-2 h-6 bg-blue-500 rounded text-white text-sm" ${todoItem.isCompleted ? 'disabled' : ''}>Edit</button>
             </div>
     </div>`
     
@@ -137,8 +155,11 @@ function buildTodoItemWithHTMLString(todoItem) {
     deleteBtn.addEventListener('click', handleDelete)
 
     const editBtn = document.getElementById(`edit-todo-${todoItem.id}`);
-    deleteBtn.addEventListener('click', handleEdit)
+    editBtn.addEventListener('click', handleEdit)
 
+
+    const updateBtn = document.getElementById(`update-form-${todoItem.id}`);
+    updateBtn.addEventListener('click', handleUpdate)
 }
 
 function updateUIWithTodoList() {
