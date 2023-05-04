@@ -2,7 +2,6 @@
  * UI Functionalities
  */
 
-import { Alert } from "bootstrap";
 import { addItemToList, getTodoList, toggleTodoStatus, updateTodoItem } from "./todo.js"
 
 const todoInput = document.getElementById("todo-input");
@@ -51,10 +50,21 @@ function handleCheckbox(event) {
 
 // // Todo Item Builder
 function buildTodoItem(todoItem) {
-    {/* <div id="todo-item" class="flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4">
-            <input data-id="2" type="checkbox" class="" />
-            <p>The item on my todo list</p>
-        </div> */}
+    // <div id="todo-item relative" class="flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4">
+    //         <input data-id="2" type="checkbox" class="" />
+    //         <p class="flex-grow">The item on my todo list</p>
+            
+    //         <div class="hidden flex gap-2 absolute">
+    //           <input type="text" class="h-6" />
+    //           <button class="px-2 h-6 bg-white rounded text-green-500">✓</button>
+    //           <button class="px-2 h-6 bg-white rounded text-red-500">x</button>
+    //         </div>
+
+    //         <div class="flex gap-1">
+    //           <button class="px-2 h-6 bg-white rounded text-red-500">x</button>
+    //           <button class="px-2 h-6 bg-blue-500 rounded text-white text-sm">Edit</button>
+    //         </div>
+    // </div>
     const parentDiv = document.createElement("div");
     parentDiv.setAttribute("id", "todo-item");
     const classList = "flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4".split(" ");
@@ -83,6 +93,26 @@ function buildTodoItem(todoItem) {
     todoItemsContainer.append(parentDiv);
 }
 
+function buildTodoItemWithHTMLString(todoItem) {
+    let todoHTML = `<div id="todo-item relative" class="flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4">
+            <input id="checkbox-${todoItem.id}" data-id="${todoItem.id}" type="checkbox" ${todoItem.isCompleted ? 'checked' : ''} />
+            <p class="flex-grow ${todoItem.isCompleted ? 'line-through' : ''}">${todoItem.title}</p>
+            
+            <div class="hidden flex gap-2 absolute">
+              <input type="text" class="h-6" />
+              <button class="px-2 h-6 bg-white rounded text-green-500">✓</button>
+              <button class="px-2 h-6 bg-white rounded text-red-500">x</button>
+            </div>
+
+            <div class="flex gap-1">
+              <button class="px-2 h-6 bg-white rounded text-red-500">x</button>
+              <button class="px-2 h-6 bg-blue-500 rounded text-white text-sm">Edit</button>
+            </div>
+    </div>`
+
+    todoItemsContainer.innerHTML += todoHTML;
+}
+
 function updateUIWithTodoList() {
     const updatedTodoList = getTodoList();
     console.log(updatedTodoList);
@@ -92,6 +122,11 @@ function updateUIWithTodoList() {
 
     // loop over it and display it to the UI
     updatedTodoList.forEach((todoListItem) => {
-        buildTodoItem(todoListItem);
+        buildTodoItemWithHTMLString(todoListItem);
+    })
+    
+    const checkBox = document.querySelectorAll(`[type="checkbox"]`);
+    checkBox.forEach((_checkbox) => {
+        _checkbox.addEventListener('change', handleCheckbox)
     })
 }

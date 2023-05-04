@@ -82,4 +82,5 @@ function findTodoItemById(id) {
 function fetchTodoFromDB() {
   addItemToList("My first todo list item")
   addItemToList("My second todo list item")
+  addItemToList("My second todo list item")
 }
