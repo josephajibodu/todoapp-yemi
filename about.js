@@ -48,6 +48,15 @@ function handleCheckbox(event) {
     }
 }
 
+// Event that triggers when delete icon is clicked
+function handleDelete(event) {
+    const canDelete = confirm("Are you sure you want to delete this task?");
+
+    console.log("User said ", canDelete)
+}
+
+// Event that triggers when Edit button is clicked
+
 // // Todo Item Builder
 function buildTodoItem(todoItem) {
     // <div id="todo-item relative" class="flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4">
@@ -105,12 +114,19 @@ function buildTodoItemWithHTMLString(todoItem) {
             </div>
 
             <div class="flex gap-1">
-              <button class="px-2 h-6 bg-white rounded text-red-500">x</button>
-              <button class="px-2 h-6 bg-blue-500 rounded text-white text-sm">Edit</button>
+              <button id="delete-todo-${todoItem.id}" data-id="${todoItem.id}" class="px-2 h-6 bg-white rounded text-red-500">x</button>
+              <button id="edit-todo-${todoItem.id}" data-id="${todoItem.id}" class="px-2 h-6 bg-blue-500 rounded text-white text-sm">Edit</button>
             </div>
     </div>`
+    
+    todoItemsContainer.insertAdjacentHTML('beforeend', todoHTML);
 
-    todoItemsContainer.innerHTML += todoHTML;
+    const checkBox = document.getElementById(`checkbox-${todoItem.id}`);
+    checkBox.addEventListener('change', handleCheckbox)
+
+    const deleteBtn = document.getElementById(`delete-todo-${todoItem.id}`);
+    deleteBtn.addEventListener('click', handleDelete)
+
 }
 
 function updateUIWithTodoList() {
@@ -125,8 +141,8 @@ function updateUIWithTodoList() {
         buildTodoItemWithHTMLString(todoListItem);
     })
     
-    const checkBox = document.querySelectorAll(`[type="checkbox"]`);
-    checkBox.forEach((_checkbox) => {
-        _checkbox.addEventListener('change', handleCheckbox)
-    })
+    // const checkBox = document.querySelectorAll(`[type="checkbox"]`);
+    // checkBox.forEach((_checkbox) => {
+    //     _checkbox.addEventListener('change', handleCheckbox)
+    // })
 }
