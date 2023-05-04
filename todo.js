@@ -86,8 +86,11 @@ function findTodoItemById(id) {
   return searchedIndex;
 }
 
+function persistToDB() {
+  // save the MY_TODO_LIST to local storage
+}
+
 function fetchTodoFromDB() {
-  addItemToList("My first todo list item")
-  addItemToList("My second todo list item")
-  addItemToList("My second todo list item")
+  // extract data stored in local storage
+  // MY_TODO_LIST = the array
 }
