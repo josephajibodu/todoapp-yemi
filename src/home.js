@@ -88,53 +88,6 @@ function handleUpdate(event) {
   updateUIWithTodoList();
 }
 
-// // // Todo Item Builder
-// function buildTodoItem(todoItem) {
-//   // <div id="todo-item relative" class="flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4">
-//   //         <input data-id="2" type="checkbox" class="" />
-//   //         <p class="flex-grow">The item on my todo list</p>
-
-//   //         <div class="hidden flex gap-2 absolute">
-//   //           <input type="text" class="h-6" />
-//   //           <button class="px-2 h-6 bg-white rounded text-green-500">✓</button>
-//   //           <button class="px-2 h-6 bg-white rounded text-red-500">x</button>
-//   //         </div>
-
-//   //         <div class="flex gap-1">
-//   //           <button class="px-2 h-6 bg-white rounded text-red-500">x</button>
-//   //           <button class="px-2 h-6 bg-blue-500 rounded text-white text-sm">Edit</button>
-//   //         </div>
-//   // </div>
-//   const parentDiv = document.createElement("div");
-//   parentDiv.setAttribute("id", "todo-item");
-//   const classList =
-//     "flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4".split(
-//       " "
-//     );
-//   classList.forEach((className) => parentDiv.classList.add(className));
-
-//   const checkBox = document.createElement("input");
-//   checkBox.setAttribute("type", "checkbox");
-//   checkBox.dataset.id = todoItem.id;
-//   checkBox.addEventListener("change", handleCheckbox);
-//   if (todoItem.isCompleted) {
-//     checkBox.checked = true;
-//   }
-
-//   const todoPara = document.createElement("p");
-//   const textNode = document.createTextNode(todoItem.title);
-//   todoPara.appendChild(textNode);
-//   // todoPara.innerText = todoItem
-//   if (todoItem.isCompleted) {
-//     todoPara.style.textDecoration = "line-through";
-//   }
-
-//   parentDiv.append(checkBox);
-//   parentDiv.append(todoPara);
-
-//   todoItemsContainer.append(parentDiv);
-// }
-
 function buildTodoItemWithHTMLString(todoItem) {
   let todoHTML = `<div id="todo-item relative" class="flex gap-2 align-item-center rounded-md bg-indigo-300 px-3 py-4">
               <input id="checkbox-${todoItem.id}" data-id="${
